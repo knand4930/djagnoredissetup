@@ -1,3 +1,4 @@
+from pyexpat.errors import messages
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -23,9 +24,11 @@ def login_attempts(request):
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
-            return redirect('login_attempts')
+            return redirect('user_list')
         else:
             print(form.errors)
+            data = form.errors
+            return render(request, 'login_attempts.html', {'data': data})
     return render(request, 'login_attempts.html', {'form': form})
 
 
@@ -43,5 +46,7 @@ def register_attempts(request):
             form.save()
             return redirect('login_attempts')
         else:
-            print(form.errors)
+            print(form.errors)  
+            data = form.errors
+            return render(request, 'register_attempts.html', {'data': data})
     return render(request, 'register_attempts.html', {'form': form})

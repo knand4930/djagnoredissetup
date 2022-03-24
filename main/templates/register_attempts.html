@@ -9,8 +9,9 @@
 </head>
 <body>
     
+{{data}}
 
-<<form action="{% url 'register_attempts' %}" method="post">
+<form action="{% url 'register_attempts' %}" method="post">
     {% csrf_token %}
     {% for field in form %}
       <div>
